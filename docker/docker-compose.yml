@@ -1,0 +1,71 @@
+services:
+  postgres:
+    container_name: ai-assistant-postgres
+    hostname: postgres
+    image: postgres:latest
+    restart: unless-stopped
+    shm_size: 128mb
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
+      POSTGRES_DB: ${POSTGRES_DB:-n8ndb}
+    volumes:
+      - ai-assistant-postgres-data:/var/lib/postgresql/data
+    networks:
+      - ai-assistant
+
+  n8n:
+    container_name: ai-assistant-n8n
+    hostname: n8n
+    image: docker.n8n.io/n8nio/n8n
+    restart: unless-stopped
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_HOST=localhost
+      - N8N_PORT=5678
+      - WEBHOOK_URL=http://localhost/
+      - N8N_SECURE_COOKIE=false
+    volumes:
+      - ai-assistant-n8n-data:/home/node/.n8n
+    networks:
+      - ai-assistant
+    depends_on:
+      - postgres
+
+  ollama:
+    container_name: ai-assistant-ollama
+    hostname: ollama
+    image: ollama/ollama:latest
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    restart: unless-stopped
+    environment:
+      - OLLAMA_ORIGINS=*
+      - OLLAMA_HOST=0.0.0.0:11434
+    ports:
+      - "${OLLAMA_PORT:-11434}:11434"
+    volumes:
+      - ollama:/root/.ollama
+    networks:
+      - ai-assistant
+
+volumes:
+  ai-assistant-n8n-data:
+    name: ai-assistant-n8n-data
+  ai-assistant-postgres-data:
+    name: ai-assistant-postgres-data
+  ollama:
+    external: true  # Use existing ollama volume with models
+
+networks:
+  ai-assistant:
+    external: true
+    name: ai-assistant

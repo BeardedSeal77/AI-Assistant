@@ -1,0 +1,17 @@
+images:
+postgres:latest
+IN USE
+4e86ce23c73b
+
+docker.n8n.io/n8nio/n8n:latest
+IN USE
+52bb09f839b2
+
+ollama/ollama:latest
+IN USE
+c9889e4c6844
+
+volumes:
+n8n_n8n
+ollama
+*we can do a network postgres database

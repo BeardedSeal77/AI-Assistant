@@ -1,0 +1,66 @@
+AI-Assistant/
+├── _documents/                          # Project documentation
+│   ├── N8N.md                          # n8n implementation guide
+│   ├── WebUI.md                        # Frontend specification
+│   └── Tree.txt                        # This file structure
+├── frontend/                           # Next.js frontend (standalone)
+│   ├── src/
+│   │   ├── app/
+│   │   │   ├── globals.css             # Global styles
+│   │   │   ├── layout.tsx              # Root layout
+│   │   │   ├── page.tsx                # Main app (login check + chat)
+│   │   │   └── auth/
+│   │   │       └── callback/
+│   │   │           └── page.tsx        # OAuth callback handler
+│   │   ├── components/
+│   │   │   ├── Auth/
+│   │   │   │   └── LoginPage.tsx       # Google OAuth login page
+│   │   │   ├── Chat/
+│   │   │   │   ├── ChatInterface.tsx   # Main chat container (with user)
+│   │   │   │   ├── MessageList.tsx     # Message display
+│   │   │   │   ├── MessageInput.tsx    # Text input
+│   │   │   │   └── Message.tsx         # Individual message
+│   │   │   └── ui/
+│   │   │       ├── Button.tsx
+│   │   │       ├── Input.tsx
+│   │   │       └── LoadingSpinner.tsx
+│   │   ├── hooks/
+│   │   │   ├── useAuth.ts              # Auth state management
+│   │   │   └── useChat.ts              # Chat functionality
+│   │   ├── lib/
+│   │   │   ├── api.ts                  # n8n API calls
+│   │   │   └── types.ts                # TypeScript types
+│   │   └── store/
+│   │       └── authStore.ts            # User session state
+│   ├── public/
+│   │   ├── favicon.ico
+│   │   └── logo.svg
+│   ├── package/
+│   │   └── package.json
+│   ├── config/
+│   │   ├── next.config.js
+│   │   ├── tailwind.config.js
+│   │   └── tsconfig.json
+│   └── .env.local.example
+├── docker/                             # Docker configuration and scripts
+│   ├── docker-compose.yml              # Main stack composition
+│   ├── scripts/
+│   │   ├── start-dev.sh                # Start development environment
+│   │   ├── start-prod.sh               # Start production environment
+│   │   ├── stop.sh                     # Stop all services
+│   │   ├── logs.sh                     # View service logs
+│   │   ├── reset-db.sh                 # Reset PostgreSQL database
+│   │   └── backup-db.sh                # Backup database
+│   └── volumes/                        # Docker volumes with configuration
+│       ├── n8n/
+│       │   └── README.md               # n8n volume info and setup
+│       ├── ollama/
+│       │   ├── README.md               # Ollama models and configuration
+│       │   └── models.txt              # List of models to download
+│       └── postgres/
+│           ├── README.md               # PostgreSQL setup instructions
+│           ├── init/
+│           │   ├── 01-create-tables.sql    # Initial database schema
+│           │   └── 02-seed-data.sql        # Optional seed data
+│           └── backups/
+└── .env.example                        # Root environment variables

@@ -1,0 +1,20 @@
+# Recommended Ollama Models for AI Assistant
+
+## General Purpose Models
+llama2:7b-chat          # Good balance of speed and capability
+llama2:13b-chat         # Better quality, slower response
+mistral:7b-instruct     # Fast and efficient for most tasks
+
+## Specialized Models
+codellama:7b-instruct   # For code-related queries
+phi:2.7b               # Lightweight model for simple tasks
+
+## Download Commands
+# Run these commands after starting the containers:
+# docker exec -it ai-assistant-ollama ollama pull llama2:7b-chat
+# docker exec -it ai-assistant-ollama ollama pull mistral:7b-instruct
+# docker exec -it ai-assistant-ollama ollama pull codellama:7b-instruct
+
+## Usage in n8n
+# Use the internal network address: http://ollama:11434
+# Model name format: model_name:tag (e.g., "llama2:7b-chat")
